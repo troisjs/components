@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts">
-import { default as Slider }  from './sliders/Slider1.vue';
+import { default as Slider }  from './sliders/zoomblur/Slider.vue';
 export default {
   components: { Slider },
   data() {
