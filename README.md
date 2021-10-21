@@ -8,3 +8,7 @@ Work in progress...
 - Explode : https://stackblitz.com/edit/troisjs-slider-explode
 - Points : https://stackblitz.com/edit/troisjs-slider-points
 - Zoomblur : https://stackblitz.com/edit/troisjs-slider-zoomblur
+
+## Stars
+
+- Starfield : https://stackblitz.com/edit/troisjs-starfield
