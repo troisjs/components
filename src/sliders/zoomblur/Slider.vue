@@ -11,7 +11,7 @@ import { Vector2 } from 'three'
 
 import { OrthographicCamera, Renderer, Scene } from 'troisjs'
 import useSliderLogic from '../useSliderLogic'
-import ZoomBlurImage from './ZoomBlurImage.js'
+import useZoomBlurImage from './useZoomBlurImage.js'
 
 export default defineComponent({
   components: { OrthographicCamera, Renderer, Scene },
@@ -23,11 +23,7 @@ export default defineComponent({
   },
   setup() {
     const center = new Vector2()
-    return {
-      center,
-      progress: 0,
-      targetProgress: 0,
-    }
+    return { center }
   },
   mounted() {
     this.renderer = this.$refs.renderer
@@ -40,11 +36,13 @@ export default defineComponent({
     }
   },
   unmounted() {
+    this.slider.dispose()
   },
   methods: {
     initSlider() {
-      this.image1 = new ZoomBlurImage(this.renderer)
-      this.image2 = new ZoomBlurImage(this.renderer)
+      this.image1 = useZoomBlurImage({ three: this.three })
+      this.image2 = useZoomBlurImage({ three: this.three })
+
       this.three.scene.add(this.image1.mesh)
       this.three.scene.add(this.image2.mesh)
 
@@ -60,6 +58,7 @@ export default defineComponent({
         this.image1.setMap(textures[0])
         this.image2.setMap(textures[1])
         this.renderer.onBeforeRender(this.animate)
+        this.renderer.onResize(this.resize)
       })
     },
     animate() {
@@ -76,6 +75,10 @@ export default defineComponent({
     onSliderChange(t1, t2) {
       this.image1.setMap(t1)
       this.image2.setMap(t2)
+    },
+    resize() {
+      this.image1.updateUV()
+      this.image2.updateUV()
     },
   },
 })

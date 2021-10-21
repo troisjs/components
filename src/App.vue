@@ -3,7 +3,8 @@
 </template>
 
 <script lang="ts">
-import { default as Slider }  from './sliders/zoomblur/Slider.vue';
+// import { default as Slider }  from './sliders/explode/Slider.vue'
+import { default as Slider }  from './sliders/zoomblur/Slider.vue'
 export default {
   components: { Slider },
   data() {
@@ -14,9 +15,9 @@ export default {
         { src: 'https://troisjs.github.io/assets/images/img3.jpg' },
         { src: 'https://troisjs.github.io/assets/images/img4.jpg' },
       ],
-    };
+    }
   },
-};
+}
 </script>
 
 <style>

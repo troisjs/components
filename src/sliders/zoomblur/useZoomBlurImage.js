@@ -2,10 +2,10 @@ import {
   Mesh,
   PlaneGeometry,
   ShaderMaterial,
-  Vector2,
+  Vector2
 } from 'three'
 
-export default function ZoomBlurImage(renderer) {
+export default function({ three }) {
   let geometry, material, mesh
 
   const uMap = { value: null }
@@ -28,7 +28,7 @@ export default function ZoomBlurImage(renderer) {
         center: uCenter,
         strength: uStrength,
         uvOffset: uUVOffset,
-        uvScale: uUVScale,
+        uvScale: uUVScale
       },
       vertexShader: `
         varying vec2 vUv;
@@ -82,7 +82,7 @@ export default function ZoomBlurImage(renderer) {
             gl_FragColor = texture2D(map, tUv);
           }
         }
-      `,
+      `
     })
 
     mesh = new Mesh(geometry, material)
@@ -94,7 +94,7 @@ export default function ZoomBlurImage(renderer) {
   }
 
   function updateUV() {
-    const ratio = renderer.size.ratio
+    const ratio = three.size.ratio
     const iRatio = uMap.value.image.width / uMap.value.image.height
     uUVOffset.value.set(0, 0)
     uUVScale.value.set(1, 1)
