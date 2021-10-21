@@ -1,5 +1,5 @@
 {
-  "name": "troisjs-components",
+  "name": "@troisjs/components",
   "version": "0.0.2",
   "scripts": {
     "dev": "vite",
