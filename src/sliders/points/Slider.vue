@@ -1,6 +1,6 @@
 <template>
   <Renderer ref="renderer" antialias resize pointer>
-    <OrthographicCamera ref="camera" :position="{ z: 10 }" />
+    <Camera ref="camera" :position="{ z: 100 }" />
     <Scene ref="scene" />
   </Renderer>
 </template>
@@ -8,11 +8,12 @@
 <script>
 import { defineComponent } from 'vue'
 
-import { OrthographicCamera, Renderer, Scene } from 'troisjs'
+import { Camera, Renderer, Scene } from 'troisjs'
 import useSliderLogic from '../useSliderLogic'
+import useImagePoints from './useImagePoints'
 
 export default defineComponent({
-  components: { OrthographicCamera, Renderer, Scene },
+  components: { Camera, Renderer, Scene },
   props: {
     images: Array,
     enableWheel: { type: Boolean, default: true },
@@ -43,17 +44,38 @@ export default defineComponent({
       })
 
       this.slider.loadImages(this.images, (textures) => {
+        this.initImagePoints(textures)
         this.renderer.onBeforeRender(this.animate)
         this.renderer.onResize(this.resize)
       })
     },
+    initImagePoints(textures) {
+      const imagePoints = this.imagePoints = useImagePoints({ three: this.three, pointSize: 1 })
+      // imagePoints.o3d.position.z = -10
+      // imagePoints.o3d.position.y = 20
+      // imagePoints.o3d.rotation.x = -0.6
+      this.three.scene.add(imagePoints.o3d)
+
+      imagePoints.resize(this.three.size)
+      imagePoints.setSrc1(textures[0])
+      imagePoints.setSrc2(textures[1])
+    },
     animate() {
       this.slider.updateProgress()
       const progress = this.slider.progress % 1
+      this.imagePoints.uProgress.value = progress
+
+      // tiltTargetRotation.set(-0.6 + three.mouse.y * 0.1, -three.mouse.x * 0.1)
+      // tiltRotation.lerp(tiltTargetRotation, 0.1)
+      // imagePoints.o3d.rotation.x = tiltRotation.x
+      // imagePoints.o3d.rotation.y = tiltRotation.y
     },
     onSliderChange(t1, t2) {
+      this.imagePoints.setSrc1(t1)
+      this.imagePoints.setSrc2(t2)
     },
-    resize() {
+    resize(size) {
+      this.imagePoints.resize(size)
     },
   },
 })
