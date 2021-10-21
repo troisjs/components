@@ -3,10 +3,10 @@
 </template>
 
 <script lang="ts">
-import { default as Slider }  from './sliders/displacement/Slider.vue'
-// import { default as Slider }  from './sliders/explode/Slider.vue'
-// import { default as Slider }  from './sliders/points/Slider.vue'
-// import { default as Slider }  from './sliders/zoomblur/Slider.vue'
+import Slider from './sliders/displacement/Slider.vue'
+// import Slider  from './sliders/explode/Slider.vue'
+// import Slider  from './sliders/points/Slider.vue'
+// import Slider  from './sliders/zoomblur/Slider.vue'
 
 const dispMapShader = `
   varying vec2 vUv;
@@ -29,11 +29,11 @@ export default {
         { src: 'https://troisjs.github.io/assets/images/img1.jpg' },
         { src: 'https://troisjs.github.io/assets/images/img2.jpg' },
         { src: 'https://troisjs.github.io/assets/images/img3.jpg' },
-        { src: 'https://troisjs.github.io/assets/images/img4.jpg' },
+        { src: 'https://troisjs.github.io/assets/images/img4.jpg' }
       ],
       dispMapShader
     }
-  },
+  }
 }
 </script>
 
