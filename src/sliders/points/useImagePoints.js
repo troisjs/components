@@ -49,7 +49,7 @@ export default function({
   function init() {
     initPlaneMesh()
     initPoints()
-    return { o3d, uProgress, setSrc1, setSrc2, resize }
+    return { o3d, uProgress, setTexture1, setTexture2, resize }
   }
 
   function initPlaneMesh() {
@@ -96,8 +96,8 @@ export default function({
 
     pointsGeometry = new BufferGeometry()
 
-    const nx = Math.round(three.size.width)
-    const ny = Math.round(three.size.height)
+    const nx = Math.round(three.size.width / pointSize)
+    const ny = Math.round(three.size.height / pointSize)
     const dx = three.size.wWidth / nx
     const dy = three.size.wHeight / ny
     const x0 = (-three.size.wWidth + dx) / 2
@@ -224,10 +224,10 @@ export default function({
   //   }
   // }
 
-  function setSrc1(src) { _setSrc(src, 1) }
-  function setSrc2(src) { _setSrc(src, 2) }
+  function setTexture1(src) { _setTexture(src, 1) }
+  function setTexture2(src) { _setTexture(src, 2) }
 
-  function _setSrc(src, i) {
+  function _setTexture(src, i) {
     return new Promise((resolve, reject) => {
       const uMap = uniforms[`uMap${i}`]
       const uUVOffset = uniforms[`uUVOffset${i}`]

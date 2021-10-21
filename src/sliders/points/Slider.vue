@@ -51,7 +51,7 @@ export default defineComponent({
       })
     },
     initImagePoints(textures) {
-      const imagePoints = this.imagePoints = useImagePoints({ three: this.three, pointSize: 1 })
+      const imagePoints = this.imagePoints = useImagePoints({ three: this.three, pointSize: 2 })
       // imagePoints.o3d.position.z = -10
       // imagePoints.o3d.position.y = 20
       // imagePoints.o3d.rotation.x = -0.6
@@ -61,8 +61,8 @@ export default defineComponent({
       this.tiltTargetRotation = this.tiltRotation.clone()
 
       imagePoints.resize(this.three.size)
-      imagePoints.setSrc1(textures[0])
-      imagePoints.setSrc2(textures[1])
+      imagePoints.setTexture1(textures[0])
+      imagePoints.setTexture2(textures[1])
     },
     animate() {
       this.slider.updateProgress()
@@ -76,8 +76,8 @@ export default defineComponent({
       this.imagePoints.o3d.rotation.y = this.tiltRotation.y
     },
     onSliderChange(t1, t2) {
-      this.imagePoints.setSrc1(t1)
-      this.imagePoints.setSrc2(t2)
+      this.imagePoints.setTexture1(t1)
+      this.imagePoints.setTexture2(t2)
     },
     resize(size) {
       this.imagePoints.resize(size)
