@@ -3,6 +3,5 @@ public
 .eslintrc.js
 .gitignore
 index.html
-rollup.config.js
-tsconfig.json
+pnpm-lock.yaml
 vite.config.js
