@@ -7,11 +7,11 @@
 
 <script>
 import { defineComponent } from 'vue'
+import { Vector2 } from 'three'
 
 import { Camera, Renderer, Scene } from 'troisjs'
 import useSliderLogic from '../useSliderLogic'
 import useImagePoints from './useImagePoints'
-import { Vector2 } from 'three'
 
 export default defineComponent({
   components: { Camera, Renderer, Scene },
