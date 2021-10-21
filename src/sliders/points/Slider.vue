@@ -1,5 +1,5 @@
 <template>
-  <Renderer ref="renderer" antialias resize pointer>
+  <Renderer ref="renderer" antialias resize :pointer="{ resetOnEnd: true }">
     <Camera ref="camera" :position="{ z: 100 }" />
     <Scene ref="scene" />
   </Renderer>
@@ -11,6 +11,7 @@ import { defineComponent } from 'vue'
 import { Camera, Renderer, Scene } from 'troisjs'
 import useSliderLogic from '../useSliderLogic'
 import useImagePoints from './useImagePoints'
+import { Vector2 } from 'three'
 
 export default defineComponent({
   components: { Camera, Renderer, Scene },
@@ -56,6 +57,9 @@ export default defineComponent({
       // imagePoints.o3d.rotation.x = -0.6
       this.three.scene.add(imagePoints.o3d)
 
+      this.tiltRotation = new Vector2(0, 0)
+      this.tiltTargetRotation = this.tiltRotation.clone()
+
       imagePoints.resize(this.three.size)
       imagePoints.setSrc1(textures[0])
       imagePoints.setSrc2(textures[1])
@@ -65,10 +69,11 @@ export default defineComponent({
       const progress = this.slider.progress % 1
       this.imagePoints.uProgress.value = progress
 
-      // tiltTargetRotation.set(-0.6 + three.mouse.y * 0.1, -three.mouse.x * 0.1)
-      // tiltRotation.lerp(tiltTargetRotation, 0.1)
-      // imagePoints.o3d.rotation.x = tiltRotation.x
-      // imagePoints.o3d.rotation.y = tiltRotation.y
+      const pointer = this.three.pointer.positionN
+      this.tiltTargetRotation.set(pointer.y * 0.1, -pointer.x * 0.1)
+      this.tiltRotation.lerp(this.tiltTargetRotation, 0.1)
+      this.imagePoints.o3d.rotation.x = this.tiltRotation.x
+      this.imagePoints.o3d.rotation.y = this.tiltRotation.y
     },
     onSliderChange(t1, t2) {
       this.imagePoints.setSrc1(t1)
