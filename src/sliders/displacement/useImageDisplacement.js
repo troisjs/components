@@ -67,16 +67,6 @@ export default function({
           vec2 duv2 = uv2 + disp * (1.0 - uProgress);
           vec4 dtex2 = texture2D(uMap2, duv2);
           gl_FragColor = mix(dtex1, dtex2, uProgress);
-
-          // vec4 dtex1 = texture2D(uMap2, uv2);
-          // vec4 dtex2 = texture2D(uMap1, uv1);
-          
-          // vec2 duv1 = uv1 + vec2((dtex1.r - 0.5) * uDispScale.x, (dtex1.g - 0.5) * uDispScale.y) * uDispScale.w * uProgress;
-          // vec2 duv2 = uv2 + vec2((dtex2.r - 0.5) * uDispScale.x, (dtex2.g - 0.5) * uDispScale.y) * uDispScale.w * (1.0 - uProgress);
-
-          // vec4 tex1 = texture2D(uMap1, duv1);
-          // vec4 tex2 = texture2D(uMap2, duv2);
-          // gl_FragColor = mix(tex1, tex2, uProgress);
         }
       `
     })

@@ -18,14 +18,14 @@ export default defineComponent({
   components: { OrthographicCamera, Renderer, Scene },
   props: {
     images: Array,
+    enableWheel: { type: Boolean, default: true },
+    enableClick: { type: Boolean, default: true },
+    enableKey: { type: Boolean, default: true },
     dispMap: String,
     dispMapShader: String,
     dispScaleX: { type: Number, default: 1 },
     dispScaleY: { type: Number, default: 1 },
-    dispScale: { type: Number, default: 0.1 },
-    enableWheel: { type: Boolean, default: true },
-    enableClick: { type: Boolean, default: true },
-    enableKey: { type: Boolean, default: true }
+    dispScale: { type: Number, default: 0.1 }
   },
   mounted () {
     this.renderer = this.$refs.renderer
