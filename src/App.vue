@@ -9,10 +9,10 @@ export default {
   data() {
     return {
       images: [
-        { src: '/assets/images/img1.jpg' },
-        { src: '/assets/images/img2.jpg' },
-        { src: '/assets/images/img3.jpg' },
-        { src: '/assets/images/img4.jpg' },
+        { src: 'https://troisjs.github.io/assets/images/img1.jpg' },
+        { src: 'https://troisjs.github.io/assets/images/img2.jpg' },
+        { src: 'https://troisjs.github.io/assets/images/img3.jpg' },
+        { src: 'https://troisjs.github.io/assets/images/img4.jpg' },
       ],
     };
   },
