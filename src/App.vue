@@ -3,8 +3,9 @@
 </template>
 
 <script lang="ts">
+import { default as Slider }  from './sliders/displacement/Slider.vue'
 // import { default as Slider }  from './sliders/explode/Slider.vue'
-import { default as Slider }  from './sliders/zoomblur/Slider.vue'
+// import { default as Slider }  from './sliders/zoomblur/Slider.vue'
 export default {
   components: { Slider },
   data() {
