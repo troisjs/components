@@ -19,7 +19,8 @@ export default defineComponent({
     images: Array,
     enableWheel: { type: Boolean, default: true },
     enableClick: { type: Boolean, default: true },
-    enableKey: { type: Boolean, default: true }
+    enableKey: { type: Boolean, default: true },
+    pointSize: { type: Number, default: 1 }
   },
   mounted() {
     this.renderer = this.$refs.renderer
@@ -51,7 +52,7 @@ export default defineComponent({
       })
     },
     initImagePoints(textures) {
-      const imagePoints = this.imagePoints = useImagePoints({ three: this.three, pointSize: 2 })
+      const imagePoints = this.imagePoints = useImagePoints({ three: this.three, pointSize: this.pointSize })
       // imagePoints.o3d.position.z = -10
       // imagePoints.o3d.position.y = 20
       // imagePoints.o3d.rotation.x = -0.6

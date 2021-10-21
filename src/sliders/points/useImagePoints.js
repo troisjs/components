@@ -77,15 +77,18 @@ export default function({
         uniform float uProgress;
         varying vec2 vUv;
         void main() {
-          vec4 tex1 = texture2D(uMap1, vUv * uUVScale1 + uUVOffset1);
-          vec4 tex2 = texture2D(uMap2, vUv * uUVScale2 + uUVOffset2);
-          float p1 = 1.0 - smoothstep(0.0, 0.05, uProgress);
-          float p2 = smoothstep(0.95, 1.0, uProgress);
-          gl_FragColor = (tex1 * p1) + (tex2 * p2);
+          if (uProgress<0.001) {
+            gl_FragColor = texture2D(uMap1, vUv * uUVScale1 + uUVOffset1);
+          } else if (uProgress>0.999) {
+            gl_FragColor = texture2D(uMap2, vUv * uUVScale2 + uUVOffset2);
+          } else {
+            discard;
+          }
         }
       `
     })
     planeMesh = new Mesh(planeGeo, planeMat)
+    planeMesh.renderOrder = 2
     o3d.add(planeMesh)
   }
 
@@ -125,8 +128,8 @@ export default function({
     if (!points1Material) {
       points1Material = new ShaderMaterial({
         transparent: true,
-        // depthTest: false,
-        // depthWrite: false,
+        depthTest: false,
+        depthWrite: false,
         uniforms: { uMap1, uUVOffset1, uUVScale1, uDispScale, uPointSize, uProgress },
         vertexShader: `
           uniform sampler2D uMap1;
@@ -144,7 +147,6 @@ export default function({
 
             vec4 mvPosition = modelViewMatrix * vec4(tPosition, 1.0);
             gl_PointSize = uPointSize * (1.0 - uProgress);
-            // gl_PointSize = uPointSize * (300.0 / -mvPosition.z) * (1.0 - uProgress);
             gl_Position = projectionMatrix * mvPosition;
           }
         `,
@@ -153,13 +155,12 @@ export default function({
           uniform float uProgress;
           varying vec2 vUv1;
           void main() {
-            // if (!(uProgress>0.01)) discard;
+            if (uProgress<0.001) discard;
 
             // float l = length(gl_PointCoord - vec2(0.5));
             // if (l>0.5) discard;
 
             vec4 tex = texture2D(uMap1, vUv1);
-            // tex.a = 1.0 - smoothstep(0.9, 1.0, uProgress);
             tex.a = 1.0 - uProgress;
             gl_FragColor = tex;
           }
@@ -170,8 +171,8 @@ export default function({
     if (!points2Material) {
       points2Material = new ShaderMaterial({
         transparent: true,
-        // depthTest: false,
-        // depthWrite: false,
+        depthTest: false,
+        depthWrite: false,
         uniforms: { uMap2, uUVOffset2, uUVScale2, uDispScale, uPointSize, uProgress },
         vertexShader: `
           uniform sampler2D uMap2;
@@ -189,7 +190,6 @@ export default function({
 
             vec4 mvPosition = modelViewMatrix * vec4(tPosition, 1.0);
             gl_PointSize = uPointSize * uProgress;
-            // gl_PointSize = uPointSize * (300.0 / -mvPosition.z) * uProgress;
             gl_Position = projectionMatrix * mvPosition;
           }
         `,
@@ -198,13 +198,12 @@ export default function({
           uniform float uProgress;
           varying vec2 vUv2;
           void main() {
-            // if (!(uProgress<0.99)) discard;
+            if (uProgress>0.999) discard;
 
             // float l = length(gl_PointCoord - vec2(0.5));
             // if (l>0.5) discard;
 
             vec4 tex = texture2D(uMap2, vUv2);
-            // tex.a = smoothstep(0.0, 0.1, uProgress);
             tex.a = uProgress;
             gl_FragColor = tex;
           }
@@ -213,9 +212,11 @@ export default function({
     }
 
     points1 = new Points(pointsGeometry, points1Material)
+    points1.renderOrder = 3
     o3d.add(points1)
 
     points2 = new Points(pointsGeometry, points2Material)
+    points2.renderOrder = 1
     o3d.add(points2)
   }
 
