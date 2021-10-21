@@ -7,13 +7,13 @@
 export default {
   props: {
     enterMessage: { type: String, default: 'ENTER VR' },
-    exitMessage: { type: String, default: 'EXIT VR' },
+    exitMessage: { type: String, default: 'EXIT VR' }
   },
   data() {
     return {
       error: '',
       xrSupport: false,
-      currentSession: null,
+      currentSession: null
     }
   },
   computed: {
@@ -24,7 +24,7 @@ export default {
         return this.error
       }
       return ''
-    },
+    }
   },
   created() {
     if ('xr' in navigator) {
@@ -62,8 +62,8 @@ export default {
     onSessionEnded() {
       this.currentSession.removeEventListener('end', this.onSessionEnded)
       this.currentSession = null
-    },
-  },
+    }
+  }
 }
 </script>
 

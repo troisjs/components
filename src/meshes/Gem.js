@@ -6,7 +6,7 @@ import {
   LinearMipmapLinearFilter,
   Mesh as TMesh,
   RGBFormat,
-  WebGLCubeRenderTarget,
+  WebGLCubeRenderTarget
 } from 'three'
 
 import { bindProp, Mesh } from 'troisjs'
@@ -17,7 +17,7 @@ export default defineComponent({
     cubeRTSize: { type: Number, default: 256 },
     cubeCameraNear: { type: Number, default: 0.1 },
     cubeCameraFar: { type: Number, default: 2000 },
-    autoUpdate: Boolean,
+    autoUpdate: Boolean
   },
   mounted() {
     this.initGem()
@@ -67,7 +67,7 @@ export default defineComponent({
       this.cubeCamera.update(this.renderer.renderer, this.scene)
       this.mesh.visible = true
       this.meshBack.visible = true
-    },
+    }
   },
-  __hmrId: 'Gem',
+  __hmrId: 'Gem'
 })

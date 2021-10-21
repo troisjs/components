@@ -7,7 +7,7 @@ export const EffectPassInjectionKey = Symbol('EffectPass')
 export default {
   props: {
     // needsSwap: { type: Boolean, default: false },
-    renderToScreen: { type: Boolean, default: false },
+    renderToScreen: { type: Boolean, default: false }
   },
   setup() {
     const composer = inject(ComposerInjectionKey)
@@ -59,8 +59,9 @@ export default {
       effectPass,
       effects,
       getEffectIndex,
-      addEffect, removeEffect,
+      addEffect,
+      removeEffect
     })
   },
-  render() { return this.$slots.default ? this.$slots.default() : [] },
+  render() { return this.$slots.default ? this.$slots.default() : [] }
 }

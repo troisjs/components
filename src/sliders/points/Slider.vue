@@ -19,7 +19,7 @@ export default defineComponent({
     images: Array,
     enableWheel: { type: Boolean, default: true },
     enableClick: { type: Boolean, default: true },
-    enableKey: { type: Boolean, default: true },
+    enableKey: { type: Boolean, default: true }
   },
   mounted() {
     this.renderer = this.$refs.renderer
@@ -41,7 +41,7 @@ export default defineComponent({
         onChange: this.onSliderChange,
         enableWheel: this.enableWheel,
         enableClick: this.enableClick,
-        enableKey: this.enableKey,
+        enableKey: this.enableKey
       })
 
       this.slider.loadImages(this.images, (textures) => {
@@ -81,7 +81,7 @@ export default defineComponent({
     },
     resize(size) {
       this.imagePoints.resize(size)
-    },
-  },
+    }
+  }
 })
 </script>

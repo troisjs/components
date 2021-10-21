@@ -8,7 +8,7 @@ import {
   ShaderMaterial,
   Uniform,
   Vector2,
-  WebGLRenderTarget,
+  WebGLRenderTarget
 } from 'three'
 
 // shaders from https://github.com/evanw/webgl-water
@@ -24,7 +24,7 @@ function LiquidEffect(renderer) {
     magFilter: NearestFilter,
     type: FloatType,
     format: RGBAFormat,
-    depthBuffer: false,
+    depthBuffer: false
   }
 
   this.hMap = new WebGLRenderTarget(this.width, this.height, targetOptions)
@@ -52,13 +52,13 @@ LiquidEffect.prototype.initShaders = function () {
       void main() {
         gl_FragColor = texture2D(tDiffuse, vUv);
       }
-    `,
+    `
   })
 
   this.updateMat = new ShaderMaterial({
     uniforms: {
       tDiffuse: { value: null },
-      delta: new Uniform(this.delta),
+      delta: new Uniform(this.delta)
     },
     vertexShader: defaultVertexShader,
     fragmentShader: `
@@ -82,13 +82,13 @@ LiquidEffect.prototype.initShaders = function () {
 
         gl_FragColor = texel;
       }
-    `,
+    `
   })
 
   this.normalsMat = new ShaderMaterial({
     uniforms: {
       tDiffuse: { value: null },
-      delta: new Uniform(this.delta),
+      delta: new Uniform(this.delta)
     },
     vertexShader: defaultVertexShader,
     fragmentShader: `
@@ -102,7 +102,7 @@ LiquidEffect.prototype.initShaders = function () {
         texel.ba = normalize(cross(dy, dx)).xz;
         gl_FragColor = texel;
       }
-    `,
+    `
   })
 
   this.dropMat = new ShaderMaterial({
@@ -110,7 +110,7 @@ LiquidEffect.prototype.initShaders = function () {
       tDiffuse: { value: null },
       center: new Uniform(new Vector2()),
       radius: { value: 0.05 },
-      strength: { value: 0.5 },
+      strength: { value: 0.5 }
     },
     vertexShader: defaultVertexShader,
     fragmentShader: `
@@ -128,7 +128,7 @@ LiquidEffect.prototype.initShaders = function () {
         // texel.r = clamp(texel.r, -2.0, 2.0);
         gl_FragColor = texel;
       }
-    `,
+    `
   })
 }
 
@@ -189,13 +189,13 @@ const FullScreenQuad = (function () {
 
   Object.defineProperty(FullScreenQuad.prototype, 'material', {
     get: function () { return this._mesh.material },
-    set: function (value) { this._mesh.material = value },
+    set: function (value) { this._mesh.material = value }
   })
 
   Object.assign(FullScreenQuad.prototype, {
     render: function (renderer) {
       renderer.render(this._mesh, camera)
-    },
+    }
   })
 
   return FullScreenQuad

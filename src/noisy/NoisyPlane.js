@@ -10,7 +10,7 @@ export default defineComponent({
     timeCoef: { type: Number, default: 0.001 },
     noiseCoef: { type: Number, default: 5 },
     deltaCoef: { type: Number, default: 1 / 512 },
-    displacementScale: { type: Number, default: 5 },
+    displacementScale: { type: Number, default: 5 }
   },
   setup(props) {
     // uniforms
@@ -21,7 +21,7 @@ export default defineComponent({
     watch(() => props.deltaCoef, (value) => { uDelta.value.set(value, value) })
 
     return {
-      uTime, uNoiseCoef, uDelta,
+      uTime, uNoiseCoef, uDelta
     }
   },
   mounted() {
@@ -49,7 +49,7 @@ export default defineComponent({
       this.dispMat = new ShaderMaterial({
         uniforms: {
           uTime: this.uTime,
-          uNoiseCoef: this.uNoiseCoef,
+          uNoiseCoef: this.uNoiseCoef
         },
         vertexShader: `
           varying vec2 vUv;
@@ -69,7 +69,7 @@ export default defineComponent({
             float noise = (snoise(vec3(p.x, p.y, uTime)) + 1.0) / 2.0;
             gl_FragColor = vec4(noise, 0.0, 0.0, 1.0);
           }
-        `,
+        `
       })
 
       // normal map
@@ -77,7 +77,7 @@ export default defineComponent({
       this.normMat = new ShaderMaterial({
         uniforms: {
           dispMap: { value: this.dispRT.texture },
-          delta: this.uDelta,
+          delta: this.uDelta
         },
         vertexShader: `
           varying vec2 vUv;
@@ -99,7 +99,7 @@ export default defineComponent({
             float y2 = texture2D(dispMap, vec2(vUv.x, vUv.y + delta.y)).r;
             gl_FragColor = vec4(0.5 + (x1 - x2), 0.5 + (y1 - y2), 1.0, 1.0);
           }
-        `,
+        `
       })
 
       this.material.displacementMap = this.dispRT.texture
@@ -123,7 +123,7 @@ export default defineComponent({
       renderer.setRenderTarget(target)
       this.fsQuad.render(renderer)
       renderer.setRenderTarget(oldTarget)
-    },
+    }
   },
-  __hmrId: 'NoisyPlane',
+  __hmrId: 'NoisyPlane'
 })

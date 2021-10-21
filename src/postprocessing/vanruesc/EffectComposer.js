@@ -38,5 +38,5 @@ export default {
   },
   render() {
     return this.$slots.default ? this.$slots.default() : []
-  },
+  }
 }

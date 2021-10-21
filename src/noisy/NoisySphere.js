@@ -10,7 +10,7 @@ export default defineComponent({
     heightSegments: { type: Number, default: 128 },
     timeCoef: { type: Number, default: 0.001 },
     noiseCoef: { type: Number, default: 0.05 },
-    dispCoef: { type: Number, default: 5 },
+    dispCoef: { type: Number, default: 5 }
   },
   setup(props) {
     // uniforms
@@ -21,7 +21,7 @@ export default defineComponent({
     watch(() => props.dispCoef, (value) => { uDispCoef.value = value })
 
     return {
-      uTime, uNoiseCoef, uDispCoef,
+      uTime, uNoiseCoef, uDispCoef
     }
   },
   mounted() {
@@ -62,7 +62,7 @@ export default defineComponent({
     },
     updateTime() {
       this.uTime.value = (Date.now() - this.startTime) * this.timeCoef
-    },
+    }
   },
-  __hmrId: 'NoisySphere',
+  __hmrId: 'NoisySphere'
 })

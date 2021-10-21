@@ -5,12 +5,12 @@ import { RendererInjectionKey, SceneInjectionKey } from 'troisjs'
 export default defineComponent({
   inject: {
     renderer: RendererInjectionKey,
-    scene: SceneInjectionKey,
+    scene: SceneInjectionKey
   },
   props: {
     gravity: { type: Object, default: () => ({ x: 0, y: 0, z: -9.82 }) },
     broadphase: { type: String },
-    onBeforeStep: Function,
+    onBeforeStep: Function
   },
   created() {
     this._parent = this.getParent()
@@ -58,9 +58,9 @@ export default defineComponent({
         return true
       }
       return false
-    },
+    }
   },
   render() {
     return this.$slots.default ? this.$slots.default() : []
-  },
+  }
 })

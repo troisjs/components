@@ -25,9 +25,9 @@ export default defineComponent({
     dispScale: { type: Number, default: 0.1 },
     enableWheel: { type: Boolean, default: true },
     enableClick: { type: Boolean, default: true },
-    enableKey: { type: Boolean, default: true },
+    enableKey: { type: Boolean, default: true }
   },
-  mounted() {
+  mounted () {
     this.renderer = this.$refs.renderer
     this.three = this.renderer.three
 
@@ -37,16 +37,16 @@ export default defineComponent({
       this.initSlider()
     }
   },
-  unmounted() {
+  unmounted () {
     this.slider.dispose()
   },
   methods: {
-    initSlider() {
+    initSlider () {
       this.image = useImageDisplacement({
         three: this.three,
         dispScaleX: this.dispScaleX,
         dispScaleY: this.dispScaleY,
-        dispScale: this.dispScale,
+        dispScale: this.dispScale
       })
       this.three.scene.add(this.image.mesh)
 
@@ -55,36 +55,24 @@ export default defineComponent({
         onChange: this.onSliderChange,
         enableWheel: this.enableWheel,
         enableClick: this.enableClick,
-        enableKey: this.enableKey,
+        enableKey: this.enableKey
       })
 
-      // test
-      const dispMapShader = `
-        varying vec2 vUv;
-        void main() {
-          vec2 uv = vUv * 20.0;
-          float modx = mod(uv.x, 2.0);
-          float mody = mod(uv.y, 2.0);
-          vec2 disp = vec2(0.5, 0.5);
-          if (modx < 1.0) { disp.y = 0.0; } else { disp.y = 1.0; }
-          if (mody < 1.0) { disp.x = 1.0; } else { disp.x = 0.0; }
-          gl_FragColor = vec4(disp.x, disp.y, 0.0, 1.0);
-        }
-      `
-
-      // if (this.dispMap) {
-      //   new TextureLoader().load(this.dispMap, (texture) => {
-      //     this.image.setDispMap(texture)
-      //   })
-      // } else if (this.dispMapShader) {
+      if (this.dispMap) {
+        new TextureLoader().load(this.dispMap, (texture) => {
+          this.image.setDispMap(texture)
+        })
+      } else if (this.dispMapShader) {
         const shaderTex = useShaderTexture({
           three: this.three,
           size: new Vector2(512, 512),
-          fragmentShader: dispMapShader,
+          fragmentShader: this.dispMapShader
         })
         shaderTex.render()
         this.image.setDispMap(shaderTex.texture)
-      // }
+      } else {
+        console.error('Missing dispMap or dispMapShader prop.')
+      }
 
       this.slider.loadImages(this.images, (textures) => {
         this.image.setTexture1(textures[0])
@@ -93,18 +81,18 @@ export default defineComponent({
         this.renderer.onResize(this.resize)
       })
     },
-    animate() {
+    animate () {
       this.slider.updateProgress()
       const progress = this.slider.progress % 1
       this.image.uProgress.value = progress
     },
-    onSliderChange(t1, t2) {
+    onSliderChange (t1, t2) {
       this.image.setTexture1(t1)
       this.image.setTexture2(t2)
     },
-    resize() {
+    resize () {
       this.image.resize()
-    },
-  },
+    }
+  }
 })
 </script>

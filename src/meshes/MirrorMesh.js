@@ -3,7 +3,7 @@ import {
   CubeCamera,
   LinearMipmapLinearFilter,
   RGBFormat,
-  WebGLCubeRenderTarget,
+  WebGLCubeRenderTarget
 } from 'three'
 
 import { Mesh } from 'troisjs'
@@ -14,7 +14,7 @@ export default defineComponent({
     cubeRTSize: { type: Number, default: 256 },
     cubeCameraNear: { type: Number, default: 0.1 },
     cubeCameraFar: { type: Number, default: 2000 },
-    autoUpdate: Boolean,
+    autoUpdate: Boolean
   },
   mounted() {
     this.initMirrorMesh()
@@ -38,7 +38,7 @@ export default defineComponent({
       this.mesh.visible = false
       this.cubeCamera.update(this.renderer.renderer, this.scene)
       this.mesh.visible = true
-    },
+    }
   },
-  __hmrId: 'MirrorMesh',
+  __hmrId: 'MirrorMesh'
 })

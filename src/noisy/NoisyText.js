@@ -7,7 +7,7 @@ export default defineComponent({
   props: {
     timeCoef: { type: Number, default: 0.001 },
     noiseCoef: { type: Number, default: 0.015 },
-    zCoef: { type: Number, default: 10 },
+    zCoef: { type: Number, default: 10 }
   },
   setup(props) {
     // uniforms
@@ -18,7 +18,7 @@ export default defineComponent({
     watch(() => props.zCoef, (value) => { uZCoef.value = value })
 
     return {
-      uTime, uNoiseCoef, uZCoef,
+      uTime, uNoiseCoef, uZCoef
     }
   },
   mounted() {
@@ -59,7 +59,7 @@ export default defineComponent({
     },
     updateTime() {
       this.uTime.value = (Date.now() - this.startTime) * this.timeCoef
-    },
+    }
   },
-  __hmrId: 'NoisyText',
+  __hmrId: 'NoisyText'
 })

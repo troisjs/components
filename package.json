@@ -1,6 +1,6 @@
 {
   "name": "troisjs-components",
-  "version": "0.1.0",
+  "version": "0.0.2",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
@@ -8,9 +8,19 @@
   },
   "devDependencies": {
     "@types/three": "^0.133.1",
+    "@typescript-eslint/eslint-plugin": "^4.33.0",
+    "@typescript-eslint/parser": "^4.33.0",
     "@vitejs/plugin-vue": "^1.9.3",
     "@vue/compiler-sfc": "^3.2.20",
+    "@vue/eslint-config-standard": "^5.1.2",
+    "@vue/eslint-config-typescript": "^7.0.0",
     "cannon": "^0.6.2",
+    "eslint": "^7.32.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.3.1",
+    "eslint-plugin-standard": "^4.1.0",
+    "eslint-plugin-vue": "^7.20.0",
     "gsap": "^3.8.0",
     "stats.js": "0.17.0",
     "three": "^0.133.1",

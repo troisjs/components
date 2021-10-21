@@ -1,15 +1,13 @@
 <template>
   <Renderer ref="renderer" antialias pointer resize>
-    <Camera ref="camera" :position="{ z: 150 }"></Camera>
-    <Scene ref="scene">
-    </Scene>
+    <Camera :position="{ z: 150 }" />
+    <Scene />
   </Renderer>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
 import { Object3D, Vector2 } from 'three'
-import { gsap, Power4 } from 'gsap'
 
 import { Camera, Renderer, Scene } from 'troisjs'
 import useSliderLogic from '../useSliderLogic'
@@ -21,9 +19,9 @@ export default defineComponent({
     images: Array,
     enableWheel: { type: Boolean, default: true },
     enableClick: { type: Boolean, default: true },
-    enableKey: { type: Boolean, default: true },
+    enableKey: { type: Boolean, default: true }
   },
-  mounted() {
+  mounted () {
     this.renderer = this.$refs.renderer
     this.three = this.renderer.three
 
@@ -33,13 +31,11 @@ export default defineComponent({
       this.initSlider()
     }
   },
-  unmounted() {
+  unmounted () {
     this.slider.dispose()
   },
   methods: {
-    initSlider() {
-      const renderer = this.renderer
-
+    initSlider () {
       this.o3d = new Object3D()
       this.tiltRotation = new Vector2(0, 0)
       this.tiltTargetRotation = this.tiltRotation.clone()
@@ -50,7 +46,7 @@ export default defineComponent({
         onChange: this.onSliderChange,
         enableWheel: this.enableWheel,
         enableClick: this.enableClick,
-        enableKey: this.enableKey,
+        enableKey: this.enableKey
       })
 
       this.slider.loadImages(this.images, (textures) => {
@@ -62,7 +58,7 @@ export default defineComponent({
         this.renderer.onResize(this.resize)
       })
     },
-    animate() {
+    animate () {
       this.slider.updateProgress()
       const progress = this.slider.progress % 1
       this.image1.uProgress.value = progress
@@ -77,14 +73,14 @@ export default defineComponent({
       this.o3d.rotation.x = this.tiltRotation.x
       this.o3d.rotation.y = this.tiltRotation.y
     },
-    onSliderChange(t1, t2) {
+    onSliderChange (t1, t2) {
       this.image1.setTexture(t1)
       this.image2.setTexture(t2)
     },
-    resize() {
+    resize () {
       this.image1.resize()
       this.image2.resize()
-    },
+    }
     // init() {
     //   this.initScene()
 
@@ -196,6 +192,6 @@ export default defineComponent({
     //   this.plane1.o3d.position.z = progress
     //   this.plane2.o3d.position.z = progress - 1
     // },
-  },
+  }
 })
 </script>

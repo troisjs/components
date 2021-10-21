@@ -12,7 +12,7 @@ export default defineComponent({
     heightSegments: { type: Number, default: 200 },
     color: { type: [Number, String], default: '#ffffff' },
     metalness: { type: Number, default: 0.75 },
-    roughness: { type: Number, default: 0.25 },
+    roughness: { type: Number, default: 0.25 }
   },
   mounted() {
     this.liquidEffect = new LiquidEffect(this.renderer.renderer)
@@ -22,10 +22,13 @@ export default defineComponent({
     })
 
     this.material = new MeshStandardMaterial({
-      color: this.color, side: DoubleSide, metalness: this.metalness, roughness: this.roughness,
+      color: this.color,
+      side: DoubleSide,
+      metalness: this.metalness,
+      roughness: this.roughness,
       onBeforeCompile: shader => {
         shader.uniforms.hmap = { value: this.liquidEffect.hMap.texture }
-        shader.vertexShader = "uniform sampler2D hmap;\n" + shader.vertexShader
+        shader.vertexShader = 'uniform sampler2D hmap;\n' + shader.vertexShader
         const token = '#include <begin_vertex>'
         const customTransform = `
           vec3 transformed = vec3(position);
@@ -34,7 +37,7 @@ export default defineComponent({
           transformed.z = 20. * info.r;
         `
         shader.vertexShader = shader.vertexShader.replace(token, customTransform)
-      },
+      }
     })
     bindProps(this, ['metalness', 'roughness'], this.material)
     watch(() => this.color, (value) => this.material.color.set(value))
@@ -49,6 +52,6 @@ export default defineComponent({
   methods: {
     update() {
       this.liquidEffect.update()
-    },
-  },
+    }
+  }
 })

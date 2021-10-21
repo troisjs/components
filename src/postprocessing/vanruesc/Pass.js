@@ -10,7 +10,7 @@ export default {
     options: { type: Object, default: () => ({}) },
     // needsSwap: { type: Boolean, default: false },
     renderToScreen: { type: Boolean, default: false },
-    onReady: Function,
+    onReady: Function
   },
   setup(props) {
     const composer = inject(ComposerInjectionKey)
@@ -42,7 +42,7 @@ export default {
 
     initPass()
   },
-  render() { return [] },
+  render() { return [] }
 }
 
 function createPass(renderer, type, options) {

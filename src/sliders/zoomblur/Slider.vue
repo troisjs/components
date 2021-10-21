@@ -19,7 +19,7 @@ export default defineComponent({
     images: Array,
     enableWheel: { type: Boolean, default: true },
     enableClick: { type: Boolean, default: true },
-    enableKey: { type: Boolean, default: true },
+    enableKey: { type: Boolean, default: true }
   },
   setup() {
     const center = new Vector2()
@@ -51,7 +51,7 @@ export default defineComponent({
         onChange: this.onSliderChange,
         enableWheel: this.enableWheel,
         enableClick: this.enableClick,
-        enableKey: this.enableKey,
+        enableKey: this.enableKey
       })
 
       this.slider.loadImages(this.images, (textures) => {
@@ -79,7 +79,7 @@ export default defineComponent({
     resize() {
       this.image1.updateUV()
       this.image2.updateUV()
-    },
-  },
+    }
+  }
 })
 </script>

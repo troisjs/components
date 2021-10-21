@@ -9,7 +9,7 @@ export default defineComponent({
   props: {
     type: { type: String, required: true },
     options: { type: Object, default: () => ({}) },
-    onReady: Function,
+    onReady: Function
   },
   setup(props) {
     const effectPass = inject(EffectPassInjectionKey)
@@ -49,7 +49,7 @@ export default defineComponent({
       }
     })
   },
-  render() { return [] },
+  render() { return [] }
 })
 
 function createEffect(effectPass, props, assets) {

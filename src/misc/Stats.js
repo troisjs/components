@@ -3,7 +3,7 @@ import { RendererInjectionKey } from 'troisjs'
 
 export default {
   props: {
-    noSetup: { type: Boolean, default: false },
+    noSetup: { type: Boolean, default: false }
   },
   emits: ['created'],
   inject: { renderer: RendererInjectionKey },
@@ -32,7 +32,7 @@ export default {
       if (this.stats) {
         this.stats.end()
       }
-    },
+    }
   },
   unmounted() {
     if (this.stats && this.stats.dom) {
@@ -43,5 +43,5 @@ export default {
   },
   render() {
     return this.$slots.default ? this.$slots.default() : []
-  },
+  }
 }
