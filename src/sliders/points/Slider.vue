@@ -80,8 +80,8 @@ export default defineComponent({
       this.imagePoints.setTexture1(t1)
       this.imagePoints.setTexture2(t2)
     },
-    resize(size) {
-      this.imagePoints.resize(size)
+    resize() {
+      this.imagePoints.resize()
     }
   }
 })

@@ -294,9 +294,9 @@ export default function({
   //   uMap2.value = map
   // }
 
-  function resize(size) {
-    planeMesh.scale.x = size.wWidth
-    planeMesh.scale.y = size.wHeight
+  function resize() {
+    planeMesh.scale.x = three.size.wWidth
+    planeMesh.scale.y = three.size.wHeight
     initPoints()
     updateUVs()
   }
