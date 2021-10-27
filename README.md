@@ -1,4 +1,4 @@
-# TroisjS Components
+# TroisJS Components
 
 Work in progress...
 
