@@ -12,11 +12,10 @@ import {
 } from 'three'
 
 // shaders from https://github.com/evanw/webgl-water
-function LiquidEffect(renderer) {
+function LiquidEffect(renderer, size = 512) {
   this.renderer = renderer
-  this.width = 512
-  this.height = 512
-  // this.delta = new Vector2(this.width / Math.pow(width, 2), this.height / Math.pow(height, 2));
+  this.width = size
+  this.height = size
   this.delta = new Vector2(1 / this.width, 1 / this.height)
 
   const targetOptions = {
@@ -58,7 +57,7 @@ LiquidEffect.prototype.initShaders = function () {
   this.updateMat = new ShaderMaterial({
     uniforms: {
       tDiffuse: { value: null },
-      delta: new Uniform(this.delta)
+      delta: { value: this.delta }
     },
     vertexShader: defaultVertexShader,
     fragmentShader: `
@@ -88,7 +87,7 @@ LiquidEffect.prototype.initShaders = function () {
   this.normalsMat = new ShaderMaterial({
     uniforms: {
       tDiffuse: { value: null },
-      delta: new Uniform(this.delta)
+      delta: { value: this.delta }
     },
     vertexShader: defaultVertexShader,
     fragmentShader: `
@@ -97,9 +96,9 @@ LiquidEffect.prototype.initShaders = function () {
       varying vec2 vUv;
       void main() {
         vec4 texel = texture2D(tDiffuse, vUv);
-        vec3 dx = vec3(delta.x, texture2D(tDiffuse, vec2(vUv.x + delta.x, vUv.y)).r - texel.r, 0.0);
-        vec3 dy = vec3(0.0, texture2D(tDiffuse, vec2(vUv.x, vUv.y + delta.y)).r - texel.r, delta.y);
-        texel.ba = normalize(cross(dy, dx)).xz;
+        vec3 dx = vec3(delta.x, 0.0, texture2D(tDiffuse, vec2(vUv.x + delta.x, vUv.y)).r - texel.r);
+        vec3 dy = vec3(0.0, delta.y, texture2D(tDiffuse, vec2(vUv.x, vUv.y + delta.y)).r - texel.r);
+        texel.ba = normalize(cross(dx, dy)).xy;
         gl_FragColor = texel;
       }
     `
