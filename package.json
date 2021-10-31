@@ -22,7 +22,7 @@
     "stats.js": "0.17.0",
     "three": "^0.133.1",
     "troika-three-text": "^0.43.0",
-    "troisjs": "^0.3.2",
+    "troisjs": "^0.3.3",
     "typescript": "^4.4.4",
     "vite": "^2.6.10",
     "vue": "^3.2.20",
