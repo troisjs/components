@@ -36,13 +36,10 @@ export default {
       transparent: true,
       side: DoubleSide,
       onBeforeCompile: shader => {
-        // console.log(shader.vertexShader)
         shader.uniforms.hmap = { value: this.liquidEffect.hMap.texture }
-        // shader.uniforms.nmap = { value: this.liquidEffect.normalMap.texture }
         shader.uniforms.hscale = hscale
         shader.vertexShader = `
           uniform sampler2D hmap;
-          // uniform sampler2D nmap;
           uniform float hscale;
         ` + shader.vertexShader
         const token = '#include <begin_vertex>'
@@ -50,12 +47,7 @@ export default {
           vec3 transformed = vec3(position);
           vec4 info = texture2D(hmap, uv);
 
-          // vec4 ninfo = texture2D(nmap, uv);
-          // vNormal = normalMatrix * ninfo.xyz;
-
-          // vNormal = normalMatrix * vec3(info.b, info.a, sqrt(1.0 - dot(info.ba, info.ba)));
-          transformedNormal = normalMatrix * vec3(info.b, info.a, sqrt(1.0 - dot(info.ba, info.ba)));
-          vNormal = transformedNormal;
+          vNormal = normalMatrix * vec3(info.b, info.a, sqrt(1.0 - dot(info.ba, info.ba)));
           transformed.z = hscale * info.r;
         `
         shader.vertexShader = shader.vertexShader.replace(token, customTransform)
@@ -73,7 +65,6 @@ export default {
   },
   methods: {
     setMaterialProp(material, key, value, needsUpdate = false) {
-      // console.log(material, key, value)
       const dstVal = material[key]
       if (dstVal instanceof Color) dstVal.set(value)
       else material[key] = value
