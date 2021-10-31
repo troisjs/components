@@ -1,67 +1,43 @@
-import { defineComponent, watch } from 'vue'
+import { defineComponent } from 'vue'
+import { Vector3 } from 'three'
 import { Sphere } from 'troisjs'
-import snoise4 from '../../glsl/snoise4.glsl.js'
+import { makeNoise4D } from 'fast-simplex-noise'
+
+const noise = makeNoise4D()
 
 export default defineComponent({
   extends: Sphere,
   props: {
-    radius: { type: Number, default: 20 },
-    widthSegments: { type: Number, default: 128 },
-    heightSegments: { type: Number, default: 128 },
-    timeCoef: { type: Number, default: 0.001 },
-    noiseCoef: { type: Number, default: 0.05 },
-    dispCoef: { type: Number, default: 5 }
-  },
-  setup(props) {
-    // uniforms
-    const uTime = { value: 0 }
-    const uNoiseCoef = { value: props.noiseCoef }
-    watch(() => props.noiseCoef, (value) => { uNoiseCoef.value = value })
-    const uDispCoef = { value: props.dispCoef }
-    watch(() => props.dispCoef, (value) => { uDispCoef.value = value })
-
-    return {
-      uTime, uNoiseCoef, uDispCoef
-    }
+    widthSegments: { type: Number, default: 64 },
+    heightSegments: { type: Number, default: 64 },
+    timeCoef: { type: Number, default: 0.0005 },
+    noiseCoef: { type: Number, default: 1 },
+    displacementScale: { type: Number, default: 0.2 }
   },
   mounted() {
-    this.updateMaterial()
-
-    this.startTime = Date.now()
-    this.renderer.onBeforeRender(this.updateTime)
+    this.init()
+    this.renderer.onBeforeRender(this.update)
   },
   unmounted() {
-    this.renderer.offBeforeRender(this.updateTime)
+    this.renderer.offBeforeRender(this.update)
   },
   methods: {
-    updateMaterial() {
-      this.material.onBeforeCompile = (shader) => {
-        shader.uniforms.uTime = this.uTime
-        shader.uniforms.uNoiseCoef = this.uNoiseCoef
-        shader.uniforms.uDispCoef = this.uDispCoef
-        shader.vertexShader = `
-          uniform float uTime;
-          uniform float uNoiseCoef;
-          uniform float uDispCoef;
-          varying float vNoise;
-          ${snoise4}
-        ` + shader.vertexShader
-
-        shader.vertexShader = shader.vertexShader.replace(
-          '#include <begin_vertex>',
-          `
-            vec4 p = vec4(vec3(position * uNoiseCoef), uTime);
-            vNoise = snoise(p);
-            vec3 transformed = vec3(position);
-            transformed += normalize(position) * vNoise * uDispCoef;
-          `
-        )
-        this.materialShader = shader
-      }
-      this.material.needsupdate = true
+    init() {
+      this.pArray = this.geometry.attributes.position.array.slice()
     },
-    updateTime() {
-      this.uTime.value = (Date.now() - this.startTime) * this.timeCoef
+    update({ time }) {
+      const position = this.geometry.attributes.position.array
+      const v3 = new Vector3()
+      for (let i = 0; i < position.length; i += 3) {
+        v3.fromArray(this.pArray, i)
+        const n = noise(v3.x * this.noiseCoef, v3.y * this.noiseCoef, v3.z * this.noiseCoef, time * this.timeCoef)
+        v3.multiplyScalar(1 + n * this.displacementScale)
+        v3.toArray(position, i)
+      }
+      this.geometry.attributes.position.needsUpdate = true
+
+      this.geometry.computeVertexNormals()
+      // this.geometry.normalizeNormals()
     }
   },
   __hmrId: 'NoisySphere'
