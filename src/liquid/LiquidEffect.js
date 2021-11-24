@@ -10,6 +10,7 @@ import {
   Vector2,
   WebGLRenderTarget
 } from 'three'
+import { FullScreenQuad } from 'three/examples/jsm/postprocessing/Pass.js'
 
 // shaders from https://github.com/evanw/webgl-water
 function LiquidEffect(renderer, size = 512) {
@@ -176,28 +177,5 @@ LiquidEffect.prototype.swapBuffers = function () {
   this.hMap = this.hMap1
   this.hMap1 = temp
 }
-
-// from https://threejs.org/examples/js/postprocessing/EffectComposer.js
-const FullScreenQuad = (function () {
-  const camera = new OrthographicCamera(-1, 1, 1, -1, 0, 1)
-  const geometry = new PlaneGeometry(2, 2)
-
-  const FullScreenQuad = function (material) {
-    this._mesh = new Mesh(geometry, material)
-  }
-
-  Object.defineProperty(FullScreenQuad.prototype, 'material', {
-    get: function () { return this._mesh.material },
-    set: function (value) { this._mesh.material = value }
-  })
-
-  Object.assign(FullScreenQuad.prototype, {
-    render: function (renderer) {
-      renderer.render(this._mesh, camera)
-    }
-  })
-
-  return FullScreenQuad
-})()
 
 export default LiquidEffect
