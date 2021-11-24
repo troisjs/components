@@ -1,8 +1,8 @@
 import { defineComponent, watch } from 'vue'
 import { ObjectSpaceNormalMap, ShaderMaterial, Vector2, WebGLRenderTarget } from 'three'
-import { Pass } from 'three/examples/jsm/postprocessing/Pass.js'
+import { FullScreenQuad } from 'three/examples/jsm/postprocessing/Pass.js'
 import { Plane } from 'troisjs'
-import snoise3 from '../../glsl/snoise3.glsl.js'
+import snoise3 from '../glsl/snoise3.glsl.js'
 
 export default defineComponent({
   extends: Plane,
@@ -42,7 +42,7 @@ export default defineComponent({
   },
   methods: {
     init() {
-      this.fsQuad = new Pass.FullScreenQuad()
+      this.fsQuad = new FullScreenQuad()
 
       // displacement map
       this.dispRT = new WebGLRenderTarget(512, 512, { depthBuffer: false, stencilBuffer: false })

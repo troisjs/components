@@ -1,6 +1,6 @@
 import { defineComponent, watch } from 'vue'
 import { Text } from 'troisjs'
-import snoise2 from '../../glsl/snoise2.glsl.js'
+import snoise2 from '../glsl/snoise2.glsl.js'
 
 export default defineComponent({
   extends: Text,

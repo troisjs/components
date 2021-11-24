@@ -1,6 +1,6 @@
 import { defineComponent, watch } from 'vue'
 import { Image } from 'troisjs'
-import snoise2 from '../../glsl/snoise2.glsl.js'
+import snoise2 from '../glsl/snoise2.glsl.js'
 
 export default defineComponent({
   extends: Image,
